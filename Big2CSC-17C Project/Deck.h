@@ -65,7 +65,7 @@ void Deck::shuffleDeck()
 {
     shuffle(Cards.begin(), Cards.end(), g);
 }
-//Sorts the deck to be neat again
+//Sort the deck to be neat again
 void Deck::sortDeck()
 {
     sort(Cards.begin(), Cards.end(),

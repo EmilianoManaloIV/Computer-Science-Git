@@ -1,27 +1,25 @@
 #include <iostream>
 #include "Card.h"
 #include "Deck.h"
+#include "PlayingHand.h"
 using namespace std;
 int main()
 {
     Deck* TestDeck = new Deck;
-    TestDeck->displayDeck();
-    cout << endl;
-    TestDeck->shuffleDeck();
-    TestDeck->displayDeck();
-    cout << endl;
-    TestDeck->sortDeck();
-    TestDeck->displayDeck();
-    cout << endl;
-    TestDeck->takeTopFromDeck();
-    TestDeck->takeBottomFromDeck();
-    TestDeck->displayDeck();
-    cout << endl;
-    TestDeck->takeRandomFromDeck();
-    TestDeck->takeRandomFromDeck();
-    TestDeck->takeRandomFromDeck();
-    TestDeck->displayDeck();
-    cout << endl << "The amount of cards we now have is: " << TestDeck->amountOfCards();
+    PlayingHand TestHand;
+
+    TestHand.addToHand(Card(9,1));
+    TestHand.addToHand(Card(10,1));
+    TestHand.addToHand(Card(6,1));
+    TestHand.addToHand(Card(2,1));
+    TestHand.addToHand(Card(9,1));
+    //TestHand.addToHand(Card(3,2));
+
+    TestHand.evaluateHand();
+
+    cout << "What is the deck type?: " << TestHand.getHandType() << endl;
+    cout << "What is the highest rank?: " << TestHand.getHighestCardRank() << endl;
+    cout << "What is the highest suit?: " << TestHand.getHighestHandSuit() << endl;
 
     delete TestDeck;
     return 0;
