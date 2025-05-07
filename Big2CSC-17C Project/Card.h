@@ -16,6 +16,7 @@ public:
     //---SPECIAL FUNCTIONS---
     int getCard() const;
     int getSuit() const;
+    bool operator==(const Card&) const;
     //---DEBUG FUNCTIONS---
     void displayCard() const;
 };
@@ -43,5 +44,10 @@ int Card::getSuit() const
 void Card::displayCard() const
 {
     cout << card << " of " << suit << endl;
+}
+//Helps with the equal operator
+bool Card::operator==(const Card& other) const
+{
+    return card == other.card && suit == other.suit;
 }
 #endif 

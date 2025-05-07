@@ -3,11 +3,31 @@
 #include "Card.h"
 #include <list>
 #include <unordered_map>
+#include <map>
 #include <algorithm>
 using namespace std;
 class PlayingHand
 {
 private:
+map<int, string> cardRankRef = { 
+    {1, "3"},
+    {2, "4"},
+    {3, "5"},
+    {4, "6"},
+    {5, "7"},
+    {6, "8"},
+    {7, "9"},
+    {8, "10"},
+    {9, "J"},
+    {10, "Q"},
+    {11, "K"},
+    {12, "A"},
+    {13, "2"}}; //Map for card rank
+    map<int, char> cardSuitesRef = 
+    {{1, '&'},
+    {2, '^'},
+    {3, 'V'},
+    {4, 'O'}};  //Map for suit rank
 list<Card> Cards;                       //Stores the actual cards that are played
 list<int> Sequence;                     //Stores the rank sequence of the cardss 
 unordered_map<int,int> CardRankAmount;  //Indicates how much a rank shoes up in a given hand
@@ -40,10 +60,13 @@ int getHandType();
 int getHighestCardRank();
 int getHighestHandSuit();
 //---SPECIAL FUNCTIONS---
-void addToHand(Card);       //Adds a card to the hand that is playing
-Card removeFromPlay(int);   //Returns the card to another object of the selected index 
+void addToHand(Card);                       //Adds a card to the hand that is playing
+Card removeCardFromPlay(int);               //Returns the card to another object of the selected index 
+list<Card> removeCardsFromPlay(list<int>);  //Returns a list of chosen cards from the hand
+list<Card> discardHand();
 void evaluateData();
 void evaluateHand();
+void displayHand();
 };
 //Default constructor as a placeholder
 PlayingHand::PlayingHand()
@@ -61,7 +84,7 @@ void PlayingHand::addToHand(Card C)
     Cards.push_back(C);
 }
 //Removes a certain card out of the hand
-Card PlayingHand::removeFromPlay(int I)
+Card PlayingHand::removeCardFromPlay(int I)
 {
     if(I >= 0 && I < Cards.size())
     {
@@ -69,6 +92,38 @@ Card PlayingHand::removeFromPlay(int I)
         advance(it, I);
         return *it;
     }
+}
+//Removes a set of card in the hand
+list<Card> PlayingHand::removeCardsFromPlay(list<int> selection)
+{
+    std::list<Card> temp;
+
+    // Convert selection of indices to actual Card objects
+    auto it = Cards.begin();
+    for (const auto& i : selection)
+    {
+        std::advance(it, i);  // Move iterator to the desired index
+        temp.push_back(*it);  // Add the selected card to temp
+        it = Cards.begin();  // Reset iterator to beginning for next selection
+    }
+
+    // Now remove selected cards from the original deck
+    for (const auto& card : temp)
+    {
+        auto removeIt = std::find(Cards.begin(), Cards.end(), card);
+        if (removeIt != Cards.end()) {
+            Cards.erase(removeIt);  // Remove the card from the deck
+        }
+    }
+
+    return temp;  // Return the list of selected cards
+}
+//This discards the whole hand
+list<Card> PlayingHand::discardHand()
+{
+    list<Card> temp = Cards;
+    Cards.clear();
+    return temp;
 }
 //Checks if this is a high card
 bool PlayingHand::isHighCard()
@@ -346,5 +401,12 @@ void PlayingHand::evaluateHand()
     handType = evaluateHandType();
     highestCardRank = evalHighestCardRank();
     highestHandSuit = evalHighestCardSuit();
+}
+void PlayingHand::displayHand()
+{
+    for(const auto& card : Cards)
+    {
+        cout << cardRankRef[card.getCard()] << " of " << cardSuitesRef[card.getSuit()] << endl;
+    }
 }
 #endif

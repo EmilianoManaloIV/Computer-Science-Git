@@ -8,18 +8,29 @@ int main()
     Deck* TestDeck = new Deck;
     PlayingHand TestHand;
 
-    TestHand.addToHand(Card(9,1));
-    TestHand.addToHand(Card(10,1));
-    TestHand.addToHand(Card(6,1));
-    TestHand.addToHand(Card(2,1));
-    TestHand.addToHand(Card(9,1));
+    TestDeck->displayDeck();
+    TestHand.addToHand(TestDeck->takeRandomFromDeck());
+    TestHand.addToHand(TestDeck->takeRandomFromDeck());
+    TestHand.addToHand(TestDeck->takeRandomFromDeck());
+    TestHand.addToHand(TestDeck->takeRandomFromDeck());
+    TestHand.addToHand(TestDeck->takeRandomFromDeck());
+    cout << endl;
+    TestDeck->displayDeck();
+    cout << endl << "MY HAND: " << endl;
+    TestHand.displayHand();
+    cout << endl << "Discard whole hand:" << endl;
+    TestDeck->placeCardsIntoDeck(TestHand.discardHand());
+    TestHand.displayHand();
+    cout << endl << "Should be added back to primary deck" << endl;
+    TestDeck->displayDeck();
+
+
+   
     //TestHand.addToHand(Card(3,2));
 
-    TestHand.evaluateHand();
+   
 
-    cout << "What is the deck type?: " << TestHand.getHandType() << endl;
-    cout << "What is the highest rank?: " << TestHand.getHighestCardRank() << endl;
-    cout << "What is the highest suit?: " << TestHand.getHighestHandSuit() << endl;
+    
 
     delete TestDeck;
     return 0;
