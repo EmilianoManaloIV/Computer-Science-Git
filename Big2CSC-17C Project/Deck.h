@@ -50,6 +50,7 @@ public:
     Card takeRandomFromDeck();
     Card takeCardFromDeck(int);
     list<Card> selectCardsAndTakeFromDeck(list<int>);
+    list<Card> getCards() const;
     int amountOfCards();
     void placeCardIntoDeck(Card);
     void placeCardsIntoDeck(list<Card>);
@@ -175,5 +176,9 @@ list<Card> Deck::selectCardsAndTakeFromDeck(list<int> selection)
     }
 
     return temp;  // Return the list of selected cards
+}
+list<Card> Deck::getCards() const
+{
+    return list<Card>(Cards.begin(), Cards.end());
 }
 #endif 

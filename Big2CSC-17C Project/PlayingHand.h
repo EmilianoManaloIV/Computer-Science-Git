@@ -55,6 +55,7 @@ int evalHighestCardSuit();         //Evaluates the highest card suit
 
 public:
 PlayingHand();          //Instantiates the playinghand object
+PlayingHand(list<Card>);//Instantiates hand with a set of cards
 ~PlayingHand();         //Destroys the intance of the playing hand object
 int getHandType();
 int getHighestCardRank();
@@ -72,6 +73,10 @@ void displayHand();
 PlayingHand::PlayingHand()
 {
 
+}
+PlayingHand::PlayingHand(list<Card> Cs)
+{
+    Cards = Cs;
 }
 //Default destructor as a placeholder
 PlayingHand::~PlayingHand()
