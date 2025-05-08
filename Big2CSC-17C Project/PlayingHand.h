@@ -52,6 +52,7 @@ bool isRoyalFlush();    //Determines if the hand is a royal flush
 int evaluateHandType();            //Evaluates the hand type
 int evalHighestCardRank();         //Evaluates the highest card rank in the hand
 int evalHighestCardSuit();         //Evaluates the highest card suit
+void clearPriorEval();             //Clears prior data before evaulating again
 
 public:
 PlayingHand();          //Instantiates the playinghand object
@@ -68,6 +69,13 @@ list<Card> discardHand();
 void evaluateData();
 void evaluateHand();
 void displayHand();
+//---OPERATOR OVERLOADS---
+bool operator==(const PlayingHand&) const;
+bool operator!=(const PlayingHand&) const;
+bool operator<(const PlayingHand&) const;
+bool operator>(const PlayingHand&) const;
+bool operator<=(const PlayingHand&) const;
+bool operator>=(const PlayingHand&) const;
 };
 //Default constructor as a placeholder
 PlayingHand::PlayingHand()
@@ -282,7 +290,7 @@ void PlayingHand::evaluateData()
 int PlayingHand::evaluateHandType()
 {
     //Check hand type
-    int hand;
+    int hand = 0;
     if(isRoyalFlush())
     {
         hand = 10;
@@ -402,6 +410,7 @@ int PlayingHand::evalHighestCardSuit()
 }
 void PlayingHand::evaluateHand()
 {
+    clearPriorEval();
     evaluateData();
     handType = evaluateHandType();
     highestCardRank = evalHighestCardRank();
@@ -414,4 +423,53 @@ void PlayingHand::displayHand()
         cout << cardRankRef[card.getCard()] << " of " << cardSuitesRef[card.getSuit()] << endl;
     }
 }
+void PlayingHand::clearPriorEval()
+{
+    Sequence.clear();                     
+    CardRankAmount.clear();  
+    CardSuitAmount.clear(); 
+    //Set default values for hand attributes
+    handType = -1;           //Indicates the hand type singles, royal flush      (0-10)
+    highestCardRank = -1;    //Indicates the highest card rank (when applicable) (1-13)
+    highestHandSuit = -1;    //Indicates the highest hand suit (when applicable) (1-4)
+}
+bool PlayingHand::operator==(const PlayingHand& other) const {
+    PlayingHand lhs = *this;
+    PlayingHand rhs = other;
+    lhs.evaluateHand();
+    rhs.evaluateHand();
+    return lhs.handType == rhs.handType &&
+           lhs.highestCardRank == rhs.highestCardRank &&
+           lhs.highestHandSuit == rhs.highestHandSuit;
+}
+
+bool PlayingHand::operator!=(const PlayingHand& other) const {
+    return !(*this == other);
+}
+
+bool PlayingHand::operator<(const PlayingHand& other) const {
+    PlayingHand lhs = *this;
+    PlayingHand rhs = other;
+    lhs.evaluateHand();
+    rhs.evaluateHand();
+
+    if (lhs.handType != rhs.handType)
+        return lhs.handType < rhs.handType;
+    if (lhs.highestCardRank != rhs.highestCardRank)
+        return lhs.highestCardRank < rhs.highestCardRank;
+    return lhs.highestHandSuit < rhs.highestHandSuit;
+}
+
+bool PlayingHand::operator>(const PlayingHand& other) const {
+    return other < *this;
+}
+
+bool PlayingHand::operator<=(const PlayingHand& other) const {
+    return !(*this > other);
+}
+
+bool PlayingHand::operator>=(const PlayingHand& other) const {
+    return !(*this < other);
+}
+
 #endif

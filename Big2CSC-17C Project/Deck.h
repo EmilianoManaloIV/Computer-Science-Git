@@ -37,6 +37,7 @@ private:
     mt19937 g;
 public:
     Deck();                         //Automatically creates a basic 52 hand without jokers
+    Deck(int);                      //Creates a deck with 0 cards in it
     Deck(Card);                     //Creates a deck with one card in it
     Deck(list<Card>);               //Creates a deck out of a given amount of cards
     ~Deck();                        //Destroys the deck
@@ -58,6 +59,11 @@ public:
 //Creates a 52 deck without jokers at instantiation
 Deck::Deck() 
 {
+    Cards.clear();
+}
+Deck::Deck(int i)
+{
+    if(i == 52)
     for(int i=1; i <= 4; i++)
     {
         for(int j=1; j <= 13; j++)
@@ -65,7 +71,7 @@ Deck::Deck()
             Cards.push_back(Card(j,i));
         }
     }
-}
+}     
 //Instantiates the deck with a single card specicifed
 Deck::Deck(Card C)
 {
