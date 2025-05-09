@@ -3,6 +3,8 @@
 #include "Deck.h"
 #include "PlayingHand.h"
 #include <string>
+#include <sstream>
+#include <iostream>
 class Player
 {
 private:
@@ -10,6 +12,8 @@ string playerName;
 bool isAi;
 Deck playerDeck;
 PlayingHand playerHand;
+
+list<int> handSelection();
 
 public:
 void addToPlayerHand(list<Card>);
@@ -77,5 +81,50 @@ bool Player::operator<=(const Player& other) const {
 bool Player::operator>=(const Player& other) const {
     return !(*this < other);
 }
-
+void Player::playerTurn()
+{
+    cout << "[[-----YOUR TURN-----]]" << endl;
+    handSelection();
+}
+list<int> Player::handSelection()
+{
+     // First display all cards
+     cout << "---YOUR CARDS---" << endl;
+     int i = 0;
+     for (const auto& card : playerDeck.getCards())
+     {
+         cout << i << ". [ ] ";
+         card.displayCard();
+         cout << endl;
+         ++i;
+     }
+ 
+     // Ask for input
+     cout << "Select Cards By Typing Their Index: ";
+ 
+     string inputLine;
+     getline(cin, inputLine);
+ 
+     istringstream iss(inputLine);
+     list<int> selectedIndices;
+     int index;
+     while (iss >> index) {
+         selectedIndices.push_back(index); // Store selected indices
+     }
+ 
+     // Display selected cards again with [X] indicator
+     cout << "---SELECTED CARDS---" << endl;
+     i = 0;
+     for (const auto& card : playerDeck.getCards())
+     {
+         // Check if current index is selected
+         bool selected = (find(selectedIndices.begin(), selectedIndices.end(), i) != selectedIndices.end());
+         cout << i << ". [" << (selected ? "X" : " ") << "] ";
+         card.displayCard();
+         cout << endl;
+         ++i;
+     }
+ 
+     return selectedIndices;
+}
 #endif

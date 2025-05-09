@@ -76,6 +76,8 @@ bool operator<(const PlayingHand&) const;
 bool operator>(const PlayingHand&) const;
 bool operator<=(const PlayingHand&) const;
 bool operator>=(const PlayingHand&) const;
+
+list<Card> getCards() const;
 };
 //Default constructor as a placeholder
 PlayingHand::PlayingHand()
@@ -471,5 +473,8 @@ bool PlayingHand::operator<=(const PlayingHand& other) const {
 bool PlayingHand::operator>=(const PlayingHand& other) const {
     return !(*this < other);
 }
-
+list<Card> PlayingHand::getCards() const
+{
+    return Cards;
+}
 #endif
