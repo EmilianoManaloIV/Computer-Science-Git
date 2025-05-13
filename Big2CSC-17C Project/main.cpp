@@ -6,26 +6,13 @@
 using namespace std;
 int main()
 {
-    Deck* TestDeck = new Deck;
+    Deck* TestDeck = new Deck(52);
     PlayingHand TestHand;
+    Player* TestPlayer = new Player;
+
+    TestPlayer->addToPlayerHand(TestDeck->getCards());
+    TestPlayer->playerTurn();
      
-    Player TestPlayer;
-    TestPlayer.getDeck().placeCardIntoDeck(TestDeck->takeRandomFromDeck());
-    TestPlayer.getDeck().placeCardIntoDeck(TestDeck->takeRandomFromDeck());
-    TestPlayer.getDeck().placeCardIntoDeck(TestDeck->takeRandomFromDeck());
-    TestPlayer.getDeck().placeCardIntoDeck(TestDeck->takeRandomFromDeck());
-    TestPlayer.getDeck().placeCardIntoDeck(TestDeck->takeRandomFromDeck());
-    TestPlayer.getDeck().placeCardIntoDeck(TestDeck->takeRandomFromDeck());
-    TestPlayer.getDeck().placeCardIntoDeck(TestDeck->takeRandomFromDeck());
-    TestPlayer.getDeck().placeCardIntoDeck(TestDeck->takeRandomFromDeck());
-    TestPlayer.getDeck().placeCardIntoDeck(TestDeck->takeRandomFromDeck());
-    TestPlayer.getDeck().placeCardIntoDeck(TestDeck->takeRandomFromDeck());
-    TestPlayer.getDeck().placeCardIntoDeck(TestDeck->takeRandomFromDeck());
-    TestPlayer.getDeck().placeCardIntoDeck(TestDeck->takeRandomFromDeck());
-    TestPlayer.getDeck().placeCardIntoDeck(TestDeck->takeRandomFromDeck());
-    
-    TestPlayer.initiatePlayerTurn();
-    
     delete TestDeck;
     return 0;
 }

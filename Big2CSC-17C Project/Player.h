@@ -5,9 +5,45 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include <map>
+#include <set>
 class Player
 {
 private:
+map<int,string> handType =
+{
+    {0, "Skip"},
+    {1,"High Card"},
+    {2, "Pair"},
+    {3, "Two Pair"},
+    {4, "Three Of A Kind"},
+    {5, "Straight"},
+    {6, "Flush"}, 
+    {7, "Full House"},
+    {8, "Four Of A Kind"},
+    {9, "Straight Flush"},
+    {10,"Royal Flush"}
+};
+map<int, string> cardRankRef = { 
+    {1, "3"},
+    {2, "4"},
+    {3, "5"},
+    {4, "6"},
+    {5, "7"},
+    {6, "8"},
+    {7, "9"},
+    {8, "10"},
+    {9, "J"},
+    {10, "Q"},
+    {11, "K"},
+    {12, "A"},
+    {13, "2"}}; //Map for card rank
+    map<int, char> cardSuitesRef = 
+    {{1, '&'},
+    {2, '^'},
+    {3, 'V'},
+    {4, 'O'}};  //Map for suit rank
+
 string playerName;
 bool isAi;
 Deck playerDeck;
@@ -83,8 +119,26 @@ bool Player::operator>=(const Player& other) const {
 }
 void Player::playerTurn()
 {
-    cout << "[[-----YOUR TURN-----]]" << endl;
-    handSelection();
+   cout << "===---[[Your Turn]]---===" << endl;
+   char selection;
+   do
+   {
+        playerHand.addToHand(playerDeck.selectCardsAndTakeFromDeck(handSelection()));
+        playerHand.evaluateHand();
+        cout << "===HAND BEING PLAYED===" << endl;
+        cout << "HAND:" << handType[playerHand.getHandType()] << endl;
+        cout << "RANK: " << cardRankRef[playerHand.getHighestCardRank()] << endl;
+        cout << "SUIT: " << cardSuitesRef[playerHand.getHighestHandSuit()] << endl;
+        cout << "Type o to confirm, type anything else to reselect: ";
+        cin >> selection;
+        if(selection != 'o')
+        {
+            playerDeck.placeCardsIntoDeck(playerHand.discardHand());
+            playerDeck.sortDeck();
+        }
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+   } while (selection != 'o');
+   
 }
 list<int> Player::handSelection()
 {
@@ -101,7 +155,6 @@ list<int> Player::handSelection()
  
      // Ask for input
      cout << "Select Cards By Typing Their Index: ";
- 
      string inputLine;
      getline(cin, inputLine);
  
@@ -124,7 +177,8 @@ list<int> Player::handSelection()
          cout << endl;
          ++i;
      }
- 
-     return selectedIndices;
+     set<int> cleanedInput(selectedIndices.begin(), selectedIndices.end());
+     list<int> output(cleanedInput.begin(), cleanedInput.end());
+     return output;
 }
 #endif

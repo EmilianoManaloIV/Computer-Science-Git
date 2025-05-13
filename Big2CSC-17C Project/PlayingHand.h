@@ -33,7 +33,7 @@ list<int> Sequence;                     //Stores the rank sequence of the cardss
 unordered_map<int,int> CardRankAmount;  //Indicates how much a rank shoes up in a given hand
 unordered_map<int,int> CardSuitAmount;  //Indicates how much a suit shoes up in a given hand
 
-int handType;           //Indicates the hand type singles, royal flush      (10-0)
+int handType;           //Indicates the hand type singles, royal flush      (0-10)
 int highestCardRank;    //Indicates the highest card rank (when applicable) (1-13)
 int highestHandSuit;    //Indicates the highest hand suit (when applicable) (1-4)
 
@@ -63,6 +63,7 @@ int getHighestCardRank();
 int getHighestHandSuit();
 //---SPECIAL FUNCTIONS---
 void addToHand(Card);                       //Adds a card to the hand that is playing
+void addToHand(list<Card>);                 //Adds a set of cards into hand
 Card removeCardFromPlay(int);               //Returns the card to another object of the selected index 
 list<Card> removeCardsFromPlay(list<int>);  //Returns a list of chosen cards from the hand
 list<Card> discardHand();
@@ -476,5 +477,12 @@ bool PlayingHand::operator>=(const PlayingHand& other) const {
 list<Card> PlayingHand::getCards() const
 {
     return Cards;
+}
+void PlayingHand::addToHand(list<Card> Cs)
+{
+     for (const auto& card : Cs)
+        {
+            Cards.push_back(card);
+        }
 }
 #endif
