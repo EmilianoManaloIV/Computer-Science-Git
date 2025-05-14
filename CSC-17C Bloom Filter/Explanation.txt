@@ -1,0 +1,1 @@
+Looking at the comparison between the simulation and the calculation, the calculation gave the lowest percent in which there would be a false alarm. Often indicating that it was the estimate of the false alarm since that's what's used in the estimate calculation. But still details critical information for this particular bloom filter.
