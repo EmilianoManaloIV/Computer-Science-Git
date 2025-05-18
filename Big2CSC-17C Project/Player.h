@@ -68,7 +68,7 @@ bool operator>=(const Player&) const;
 
 //---Turn Routines---
 void playerTurn();
-void aiTurn();
+void aiTurn(PlayingHand);
 };
 Player::Player()
 {
@@ -180,5 +180,9 @@ list<int> Player::handSelection()
      set<int> cleanedInput(selectedIndices.begin(), selectedIndices.end());
      list<int> output(cleanedInput.begin(), cleanedInput.end());
      return output;
+}
+void Player::aiTurn(PlayingHand p)
+{
+    
 }
 #endif

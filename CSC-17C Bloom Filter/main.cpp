@@ -30,7 +30,7 @@ std::string getRandomName(const std::string names[], size_t size);
 
 int main()
 {
-    int size = 15;
+    int size = 100;
     int inputSize = 15;
     float falseInputs = 50;
     float falsePos = 0;
